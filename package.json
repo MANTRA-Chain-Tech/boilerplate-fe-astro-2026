@@ -1,10 +1,13 @@
 {
-  "name": "fe-boilerplate-2026",
+  "name": "astro-fe-boilerplate-2026",
+  "author": "Aaron Baideme",
   "type": "module",
   "version": "0.0.1",
+  "license": "MIT",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=24.0.0"
   },
+  "packageManager": "pnpm@10.33.2",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

@@ -23,7 +23,7 @@ This document is the authoritative reference for developers and AI coding agents
 
 ## Prerequisites
 
-- **Node.js** ≥ 22.12.0 (see `engines` in `package.json`)
+- **Node.js** ≥ 24.0.0 (see `engines` in `package.json`)
 - **pnpm** ≥ 10.x — install via `npm install -g pnpm`
 - **Playwright browsers** — run `pnpm playwright install chromium` once after cloning
 
