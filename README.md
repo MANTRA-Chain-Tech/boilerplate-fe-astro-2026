@@ -37,50 +37,40 @@ All commands are run from the root of the project, from a terminal:
 | `pnpm preview`         | Preview your build locally, before deploying            |
 | `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check`        |
 | `pnpm astro -- --help` | Get help using the Astro CLI                            |
-| `pnpm deploy`          | Build and deploy to Cloudflare Pages (production)       |
-| `pnpm deploy:preview`  | Build and deploy to a Cloudflare Pages preview          |
+| `pnpm deploy`          | Build and deploy to Cloudflare Workers (production)     |
+| `pnpm deploy:preview`  | Build and deploy to Cloudflare Workers preview env      |
 | `pnpm cf-typegen`      | Generate Cloudflare runtime types from `wrangler.jsonc` |
 
-## ☁️ Deploying to Cloudflare Pages
+## ☁️ Deploying to Cloudflare Workers
 
 This boilerplate ships with a [`wrangler.jsonc`](./wrangler.jsonc) so it can be
-deployed to [Cloudflare Pages](https://developers.cloudflare.com/pages/) in two
-ways:
+deployed to [Cloudflare Workers](https://developers.cloudflare.com/workers/).
 
-### 1. Via the CLI
+### Via the CLI
 
 ```sh
 # Authenticate once
 pnpm wrangler login
 
-# Deploy the production branch
+# Deploy production
 pnpm deploy
 
-# Or deploy a preview build
+# Deploy preview environment
 pnpm deploy:preview
 ```
 
-The first deployment will create the Pages project (using the `name` field in
-`wrangler.jsonc`). Subsequent deployments push to the same project.
+The first deployment creates the Worker using the `name` field in
+`wrangler.jsonc`. Static output from `./dist` is served through Workers Assets.
+Production deploys are available at:
+`<worker-name>.<account-subdomain>.workers.dev`
 
-### 2. Via the Cloudflare dashboard (GitHub App integration)
-
-1. In the Cloudflare dashboard go to **Workers & Pages → Create → Pages →
-   Connect to Git** and select this repository.
-2. Set the build command to `pnpm build` and the build output directory to
-   `dist`.
-3. Cloudflare will pick up [`wrangler.jsonc`](./wrangler.jsonc) automatically.
-
-Every non-production branch and pull request gets its own preview URL
-(`<branch>.<project>.pages.dev`). The production branch is served from
-`<project>.pages.dev`.
+Preview deploys use the `preview` environment and are available at:
+`<worker-name>-preview.<account-subdomain>.workers.dev`
 
 ### Custom domains
 
-Custom domains for the production environment are commented out by default in
-`wrangler.jsonc`. Uncomment the `env.production` block and edit the `routes`
-array, or add the domain through the Cloudflare dashboard
-(**Pages → your project → Custom domains**).
+Routes for custom domains are commented out by default in `wrangler.jsonc`.
+Uncomment the `env.production` block and edit the `routes` array.
 
 ## 👀 Want to learn more?
 

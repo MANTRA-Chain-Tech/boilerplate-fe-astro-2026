@@ -1,31 +1,27 @@
 /**
- * Cloudflare Pages configuration for this Astro project.
+ * Cloudflare Workers configuration for this Astro project.
  *
- * Used for both:
- *   1. CLI deployments via `pnpm deploy` (uses `wrangler pages deploy`).
- *   2. Cloudflare Dashboard's GitHub App integration — when a `wrangler.jsonc`
- *      is present at the repo root, the Pages build system reads it and
- *      respects `pages_build_output_dir` plus environment overrides.
+ * Used for:
+ *   1. CLI deployments via `pnpm deploy` (`wrangler deploy`).
+ *   2. Preview deployments via `pnpm deploy:preview` (`wrangler deploy --env preview`).
  *
  * Docs:
- *   - https://developers.cloudflare.com/pages/functions/wrangler-configuration/
  *   - https://developers.cloudflare.com/workers/wrangler/configuration/
+ *   - https://developers.cloudflare.com/workers/static-assets/
  */
 {
   "$schema": "https://unpkg.com/wrangler/config-schema.json",
   "name": "astro-fe-boilerplate-2026",
   "compatibility_date": "2025-05-01",
-  "pages_build_output_dir": "./dist",
+  "assets": {
+    "directory": "./dist",
+    // Binding exposed to Worker runtime for static asset fetches.
+    "binding": "ASSETS",
+  },
 
   /**
-   * Preview / non-production branch deployments.
-   *
-   * Cloudflare Pages automatically creates a preview deployment for every
-   * non-production branch and pull request. Each deployment is reachable at
-   * a unique `<hash>.<project>.pages.dev` URL and the per-branch alias
-   * `<branch>.<project>.pages.dev`.
-   *
-   * Vars listed here are exposed to those preview deployments only.
+   * Preview / non-production deployments.
+   * Vars listed here are exposed only when deploying with `--env preview`.
    */
   "env": {
     "preview": {
@@ -37,15 +33,10 @@
     /**
      * Production environment.
      *
-     * Uncomment and edit this block when you are ready to attach a custom
-     * domain to the production deployment. By default Cloudflare Pages
-     * serves the production branch at `<project>.pages.dev` — no extra
-     * config is needed for that URL to work.
+     * Uncomment and edit this block when you are ready to configure
+     * production routes and environment variables.
      *
-     * Custom domains are normally added through the Cloudflare dashboard
-     * (Pages → your project → Custom domains). The `routes` array below is
-     * the equivalent configuration-as-code form and requires the zone to
-     * exist on the same Cloudflare account.
+     * Routes require the zone to exist on the same Cloudflare account.
      */
     // ,
     // "production": {
@@ -54,12 +45,12 @@
     //   },
     //   "routes": [
     //     {
-    //       "pattern": "example.com",
-    //       "custom_domain": true
+    //       "pattern": "example.com/*",
+    //       "zone_name": "example.com"
     //     },
     //     {
-    //       "pattern": "www.example.com",
-    //       "custom_domain": true
+    //       "pattern": "www.example.com/*",
+    //       "zone_name": "example.com"
     //     }
     //   ]
     // }
