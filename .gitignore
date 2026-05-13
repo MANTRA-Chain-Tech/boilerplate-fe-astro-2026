@@ -31,3 +31,8 @@ storybook-server/
 playwright-report/
 test-results/
 coverage/
+
+# wrangler / cloudflare
+.wrangler/
+.dev.vars
+worker-configuration.d.ts

@@ -25,7 +25,10 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "astro check",
-    "prepare": "husky"
+    "prepare": "husky",
+    "deploy": "pnpm build && wrangler pages deploy",
+    "deploy:preview": "pnpm build && wrangler pages deploy --branch=preview",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.0",
@@ -62,6 +65,7 @@
     "prettier-plugin-tailwindcss": "^0.8.0",
     "storybook": "^10.3.6",
     "typescript-eslint": "^8.59.2",
-    "vitest": "^4.1.6"
+    "vitest": "^4.1.6",
+    "wrangler": "^4.59.1"
   }
 }
